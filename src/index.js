@@ -4,13 +4,14 @@ import './index.css';
 import VidyoConnector from './VidyoConnector';
 import registerServiceWorker from './registerServiceWorker';
 
-const host              = getUrlParameterByName("host", "prod.vidyo.io");
-const token             = getUrlParameterByName("token");
-const resourceId        = getUrlParameterByName("resourceId", "demoRoom");
-const displayName       = getUrlParameterByName("displayName", "Guest");
-const useNativeWebRTC   = getUrlParameterByName("useNativeWebRTC", false);
+const host                  = getUrlParameterByName("host", "prod.vidyo.io");
+const token                 = getUrlParameterByName("token");
+const resourceId            = getUrlParameterByName("resourceId", "demoRoom");
+const displayName           = getUrlParameterByName("displayName", "Guest");
+const useTranscodingWebRTC  = getUrlParameterByName("useTranscodingWebRTC", false);
+const plugin                = getUrlParameterByName("plugin", false);
 
-loadRemoteVidyoClientLib(useNativeWebRTC, false);
+loadRemoteVidyoClientLib(useTranscodingWebRTC, plugin);
 
 const viewId                = "renderer";
 const viewStyle             = "VIDYO_CONNECTORVIEWSTYLE_Default";
@@ -35,10 +36,10 @@ ReactDOM.render(<VidyoConnector
 
 registerServiceWorker();
 
-function loadRemoteVidyoClientLib(useNativeWebRTC = false, plugin = false) {
+function loadRemoteVidyoClientLib(useTranscodingWebRTC = false, plugin = false) {
     let script  = document.createElement('script');
     script.type = 'text/javascript';
-    script.src  = `https://static.vidyo.io/latest/javascript/VidyoClient/VidyoClient.js?onload=onVidyoClientLoaded&useNativeWebRTC=${useNativeWebRTC}&plugin=${plugin}&webrtcLogLevel=info`;
+    script.src  = `https://static.vidyo.io/latest/javascript/VidyoClient/VidyoClient.js?onload=onVidyoClientLoaded&useTranscodingWebRTC=${useTranscodingWebRTC}&plugin=${plugin}&webrtcLogLevel=info`;
     document.getElementsByTagName('head')[0].appendChild(script);
 }
 
